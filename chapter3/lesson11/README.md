@@ -80,8 +80,8 @@ gantt
 
 ### Step 1: Environment Setup
 ```bash
-# Install core dependencies
-pip install openai networkx pyvis
+# Install dependencies
+pip install -r requirements.txt
 
 # Configure API credentials (choose one)
 export DASHSCOPE_API_KEY=your_dashscope_key

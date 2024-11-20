@@ -146,9 +146,9 @@ gantt
 
 ### Step 1: Environment Setup
 ```bash
-# Core dependencies are in requirements.txt
-cd chapter2/lesson12
-pip install openai scikit-learn numpy
+# Install dependencies
+cd chapter3/lesson12
+pip install -r requirements.txt
 
 # Configure API credentials
 export DASHSCOPE_API_KEY=your_dashscope_key

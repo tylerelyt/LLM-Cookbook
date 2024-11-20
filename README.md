@@ -65,7 +65,14 @@ A practical workshop for building LLM applications from scratch. Learn by doing 
 ```bash
 git clone https://github.com/tylerelyt/LLM-Workshop.git
 cd LLM-Workshop
+
+# Install global dependencies
 pip install -r requirements.txt
+
+# For specific lessons, install their dependencies:
+# pip install -r chapter3/lesson10/requirements.txt  # RAG System
+# pip install -r chapter3/lesson11/requirements.txt  # Knowledge Graph
+# pip install -r chapter3/lesson12/requirements.txt  # NL2SQL
 ```
 
 ### Environment Setup

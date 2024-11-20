@@ -84,7 +84,7 @@ gantt
 ### Step 1: Environment Setup
 ```bash
 # Install dependencies
-pip install -r lesson10_requirements.txt
+pip install -r requirements.txt
 
 # Configure API credentials
 export DASHSCOPE_API_KEY=your_api_key
