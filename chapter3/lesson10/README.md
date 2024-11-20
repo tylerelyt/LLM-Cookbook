@@ -92,8 +92,8 @@ export DASHSCOPE_API_KEY=your_api_key
 
 ### Step 2: Run Demonstration
 ```bash
-cd chapter2/lesson10
-python rag_demo.py
+cd chapter3/lesson10
+python rag_pipeline.py
 ```
 
 ### Step 3: Observe Results
@@ -223,5 +223,3 @@ graph TD
 ```
 
 ---
-
-**恭喜！你已经掌握了现代RAG系统的核心技术！** 🎉

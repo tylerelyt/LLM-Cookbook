@@ -107,11 +107,11 @@ python knowledge_pipeline.py
 
 # Create production-grade RAG systems
 cd chapter3/lesson10
-python rag_demo.py
+python rag_pipeline.py
 
 # Develop enterprise NL2SQL systems
 cd chapter3/lesson12
-python nl2sql_demo.py
+python nl2sql_engine.py
 
 # Create multi-agent collaboration systems
 cd chapter4/lesson17  
@@ -119,7 +119,7 @@ python agent_manager.py
 
 # Develop conversational AI with tool integration
 cd chapter1/lesson3
-python demo.py
+python multimodal_chat.py
 ```
 
 ## 🏛️ Project Structure
@@ -146,15 +146,15 @@ LLM-Workshop/
 │       └── requirements.txt     # Format conversion tools
 ├── chapter3/                    # Advanced Knowledge Engineering
 │   ├── lesson10/                # Production-grade RAG with BGE-m3
-│   │   ├── rag_demo.py
+│   │   ├── rag_pipeline.py
 │   │   ├── requirements.txt     # BGE models, RAG dependencies
 │   │   └── README.md
 │   ├── lesson11/                # Knowledge graph construction
 │   │   ├── knowledge_pipeline.py
 │   │   ├── requirements.txt     # networkx, pyvis, CoT reasoning
-│   │   └── examples/demo_outputs/
+│   │   └── examples/outputs/
 │   └── lesson12/                # Enterprise NL2SQL systems
-│       ├── nl2sql_demo.py
+│       ├── nl2sql_engine.py
 │       ├── requirements.txt     # SQL, vector search, analytics
 │       └── README.md
 ├── chapter4/                    # Expert-Level Multi-Agent Systems  

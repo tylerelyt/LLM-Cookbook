@@ -97,7 +97,7 @@ python knowledge_pipeline.py
 ### Step 3: View Results
 ```bash
 # Generated files
-examples/demo_outputs/
+examples/outputs/
 ├── knowledge_graph.html     # Interactive visualization
 ├── knowledge_graph.json     # Structured graph data
 ├── pipeline_log_*.log       # Detailed execution logs
@@ -293,39 +293,25 @@ LLM_MODEL = "gpt-4"  # or "qwen-plus", "gpt-3.5-turbo"
 temperature = 0.1    # More conservative output
 ```
 
-## 📚 Further Reading & Advanced Topics
+## 📚 Further Reading & Reference
 
-### Research Papers
-- [Chain-of-Thought Prompting Elicits Reasoning in Large Language Models](https://arxiv.org/abs/2201.11903)
-- [Knowledge Graph Construction from Text: A Survey](https://arxiv.org/abs/2002.00388)
-- [Entity Linking and Disambiguation](https://web.stanford.edu/class/cs224n/reports/custom_116752087.pdf)
+- [BAAI/bge-m3 Model](https://huggingface.co/BAAI/bge-m3)
+- [LangChain Knowledge Graph Construction](https://python.langchain.com/docs/use_cases/graph/)
+- [NetworkX Library](https://networkx.org/)
+- [Pyvis Visualization](https://pyvis.readthedocs.io/en/latest/)
 
-### Advanced Technologies
-- **Multi-modal Knowledge Graphs**: Combining image and text information
-- **Dynamic Graph Updates**: Incremental knowledge graph construction
-- **Knowledge Graph Reasoning**: Logic reasoning based on graph structure
-- **Graph Neural Networks**: GNN applications in knowledge graphs
+## 🎓 Technical Competency Self-Assessment
 
-## 🎓 Technical Mastery Assessment
+### Acquired Skills:
+1. **End-to-End Knowledge Graph Construction**: From raw text to interactive visualization
+2. **Chain-of-Thought Reasoning**: For enhanced information extraction and entity resolution
+3. **Ontology Engineering**: Automated schema optimization and standardization
+4. **Graph Data Modeling**: Structuring information with entities, relations, and attributes
+5. **Advanced Visualization**: Creating interactive network graphs
 
-### Acquired Competencies:
-1. ✅ Complete pipeline for text-to-knowledge graph construction
-2. ✅ Chain-of-Thought reasoning applications in NLP
-3. ✅ Engineering best practices for entity-relation extraction
-4. ✅ Knowledge graph quality assessment and optimization methods
-5. ✅ Interactive knowledge graph visualization techniques
+### Next Learning Steps:
+- **Lesson 12**: Building enterprise-grade NL2SQL systems
+- **Advanced Topic**: Integrating external knowledge bases for graph enrichment
+- **Research Direction**: Exploring multi-modal knowledge graph construction
 
-### Core Technical Achievements:
-- 🧠 **Reasoning Capability**: Chain-of-Thought logical analysis
-- 🔗 **Graph Construction**: End-to-end knowledge graph generation
-- 🎯 **Quality Control**: Multi-stage validation and optimization
-- 🎨 **Visualization**: Elegant interactive presentations
-
-### Recommended Learning Progression:
-- 🗄️ **Lesson 12**: Enterprise-grade NL2SQL applications
-- 🤖 **Chapter 3**: Multi-agent system collaboration
-- 🚀 **Advanced Projects**: Domain-specific knowledge graph construction
-
----
-
-**恭喜！你已经掌握了AI驱动的知识图谱构建技术！** 🎉 
+--- 

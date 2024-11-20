@@ -1,35 +1,34 @@
-# Lesson18 多模态知识图谱构建
+# Lesson 18: Building Multimodal Knowledge Graphs
 
-## 课程简介
+This lesson explores the advanced topic of building multimodal knowledge graphs, which integrate information from different data types, such as text and images. You will learn how to extract, fuse, and represent knowledge from diverse sources in a unified graph structure.
 
-本课程聚焦于利用OpenAI API和多模态模型（如GPT-4V、CLIP等）进行多模态知识图谱的构建。内容涵盖文本、图像等多模态信息的抽取、融合与知识图谱生成。
+## Key Learning Objectives
 
-## 学习目标
-- 理解多模态知识图谱的基本概念
-- 掌握多模态信息抽取与融合方法
-- 实践多模态知识图谱的构建与应用
+- **Multimodal Knowledge Graphs**: Understand what multimodal knowledge graphs are and why they are important for a comprehensive understanding of complex domains.
+- **Multimodal Information Extraction**: Learn techniques for extracting entities, relations, and attributes from both text and images.
+- **Knowledge Fusion**: Explore methods for fusing information from different modalities into a single, coherent knowledge graph.
+- **Advanced Applications**: Discover the potential applications of multimodal knowledge graphs, such as cross-modal question answering and intelligent document analysis.
 
-## 主要内容
-1. 多模态知识图谱基础
-2. 多模态信息抽取（文本、图片）
-3. 融合与图谱生成
-4. 应用案例：智能文档分析、跨模态问答
+## File Descriptions
 
-## 目录结构
-```
-lesson18/
-├── README.md
-├── multimodal_extractor.py
-├── example1.py
-├── example2.py
-├── data/
-```
+*This lesson currently contains placeholder files. The example scripts demonstrating the construction of a multimodal knowledge graph are not yet available.*
 
-## 环境要求
-- Python 3.8+
-- openai, pillow, transformers等依赖（见requirements.txt）
+- `README.md`: This file, providing an overview of the lesson.
+- `requirements.txt`: Lists all the necessary Python dependencies for this lesson.
 
-## 运行示例
-```bash
-python example1.py
-``` 
+## Setup and Execution
+
+1.  **Install Dependencies**:
+    Install the required packages using pip.
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+2.  **Run the Examples**:
+    *(Once example files are added to this directory, you will be able to run them to see the multimodal knowledge graph construction in action.)*
+
+    For example:
+    ```bash
+    # This is a hypothetical command
+    python run_multimodal_kg_example.py
+    ``` 

@@ -1,6 +1,6 @@
-# Lesson 12: Enterprise-Grade Chinese NL2SQL System
+# Lesson 12: Enterprise-Grade NL2SQL System
 
-> **Course Module**: Chapter 2 - Production Database Systems and Query Intelligence  
+> **Course Module**: Chapter 3 - Production Database Systems and Query Intelligence  
 > **Prerequisites**: Completion of Lessons 10-11 (RAG + Knowledge Graphs), SQL proficiency  
 > **Duration**: 90-120 minutes  
 > **Complexity Level**: Expert
@@ -156,7 +156,7 @@ export DASHSCOPE_API_KEY=your_dashscope_key
 
 ### Step 2: Run Enterprise Demonstration
 ```bash
-python nl2sql_demo.py
+python nl2sql_engine.py
 ```
 
 ### Step 3: Observe Output

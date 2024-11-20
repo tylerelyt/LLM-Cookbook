@@ -1,35 +1,34 @@
-# Lesson17 AutoGen多智能体系统
+# Lesson 17: Introduction to Multi-Agent Systems with AutoGen
 
-## 课程简介
+This lesson introduces the fundamentals of building multi-agent systems using the AutoGen framework. You will learn how to orchestrate multiple AI agents to collaborate on complex tasks, leveraging their specialized capabilities to achieve a common goal.
 
-本课程聚焦于基于OpenAI API和AutoGen框架的多智能体系统构建。内容涵盖多智能体协作、通信机制、任务分解与调度、典型应用场景等。
+## Key Learning Objectives
 
-## 学习目标
-- 理解多智能体系统的基本原理
-- 掌握AutoGen的核心用法
-- 实践多智能体协作任务
+- **Multi-Agent Concepts**: Understand the core principles of multi-agent systems, including collaboration, communication, and role-based specialization.
+- **AutoGen Framework**: Learn the key components of AutoGen, such as `ConversableAgent` and `UserProxyAgent`.
+- **Agent Orchestration**: See how to define a group of agents and orchestrate their interaction to solve a problem.
+- **Practical Applications**: Explore common use cases for multi-agent systems, such as automated problem-solving, code generation, and content creation.
 
-## 主要内容
-1. 多智能体系统基础
-2. AutoGen框架介绍与环境配置
-3. 智能体通信与协作机制
-4. 典型案例实战：自动化问答、协同写作、复杂任务分解
+## File Descriptions
 
-## 目录结构
-```
-lesson17/
-├── README.md
-├── agent_manager.py
-├── example1.py
-├── example2.py
-├── data/
-```
+*This lesson currently contains placeholder files. The example scripts demonstrating specific AutoGen implementations are not yet available.*
 
-## 环境要求
-- Python 3.8+
-- openai, autogen等依赖（见requirements.txt）
+- `README.md`: This file, providing an overview of the lesson.
+- `requirements.txt`: Lists all the necessary Python dependencies for this lesson.
 
-## 运行示例
-```bash
-python example1.py
-``` 
+## Setup and Execution
+
+1.  **Install Dependencies**:
+    Install the required packages using pip.
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+2.  **Run the Examples**:
+    *(Once example files are added to this directory, you will be able to run them to see the multi-agent system in action.)*
+
+    For example:
+    ```bash
+    # This is a hypothetical command
+    python run_autogen_example.py
+    ``` 
