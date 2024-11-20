@@ -33,14 +33,21 @@ A practical workshop for building LLM applications from scratch. Learn by doing 
 - Tool-augmented agents for mathematical and logical tasks
 - In-context learning and multi-turn conversation modeling
 
-### 🔍 Chapter 2: Retrieval & Knowledge Engineering  
-**Advanced RAG architectures and knowledge graphs**
-- Semantic retrieval with vector databases and embedding models
-- Automated entity extraction and knowledge graph construction
-- Interactive graph visualization with Pyvis and NetworkX
-- Multi-hop reasoning with feedback optimization loops
+### 🔧 Chapter 2: Intermediate Processing
+**Document processing and text analysis**
+- Advanced text processing and semantic analysis
+- Multi-format document handling and extraction
+- Content understanding and transformation patterns
 
-### 🤖 Chapter 3: Multi-Agent Orchestration
+### 🔍 Chapter 3: Retrieval & Knowledge Engineering  
+**Advanced RAG architectures and knowledge graphs**
+- Production-grade RAG systems with BGE-m3 and BGE-reranker
+- Automated entity extraction and knowledge graph construction
+- Chain-of-Thought reasoning for knowledge extraction
+- Enterprise NL2SQL with intelligent rejection mechanisms
+- Interactive graph visualization with Pyvis and NetworkX
+
+### 🤖 Chapter 4: Multi-Agent Orchestration
 **Distributed AI coordination and collaboration patterns**
 - Inter-agent communication protocols and message passing
 - Task decomposition and hierarchical planning strategies
@@ -76,11 +83,19 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 ### Start Building
 ```bash
 # Build an interactive knowledge graph from scratch
-cd chapter2/lesson11
+cd chapter3/lesson11
 python knowledge_pipeline.py
 
+# Create production-grade RAG systems
+cd chapter3/lesson10
+python rag_demo.py
+
+# Develop enterprise NL2SQL systems
+cd chapter3/lesson12
+python nl2sql_demo.py
+
 # Create multi-agent collaboration systems
-cd chapter3/lesson17  
+cd chapter4/lesson17  
 python agent_manager.py
 
 # Develop conversational AI with tool integration
@@ -92,19 +107,29 @@ python demo.py
 
 ```
 LLM-Workshop/
-├── chapter1/                    # Conversational Intelligence
+├── chapter1/                    # Conversational Intelligence (Foundation)
 │   ├── lesson1/                 # Agent architectures & tool integration
 │   ├── lesson2/                 # Mathematical reasoning & expression parsing  
 │   ├── lesson3/                 # Multi-modal dialog systems
-│   └── lesson*/                 # Advanced reasoning patterns
-├── chapter2/                    # Knowledge Engineering
-│   ├── lesson11/                # Knowledge graph construction pipeline
+│   ├── lesson4/                 # Advanced dialog patterns
+│   └── lesson5/                 # Reasoning optimization
+├── chapter2/                    # Intermediate Processing  
+│   ├── lesson6/                 # Advanced text processing
+│   ├── lesson7/                 # Document understanding
+│   └── lesson9/                 # Content transformation
+├── chapter3/                    # Advanced Knowledge Engineering
+│   ├── lesson10/                # Production-grade RAG with BGE-m3
+│   │   ├── rag_demo.py
+│   │   └── README.md
+│   ├── lesson11/                # Knowledge graph construction
 │   │   ├── knowledge_pipeline.py
 │   │   └── examples/demo_outputs/
-│   └── lesson*/                 # RAG & retrieval systems
-├── chapter3/                    # Multi-Agent Systems  
+│   └── lesson12/                # Enterprise NL2SQL systems
+│       ├── nl2sql_demo.py
+│       └── README.md
+├── chapter4/                    # Expert-Level Multi-Agent Systems  
 │   ├── lesson17/                # Agent coordination frameworks
-│   └── lesson18/                # Multi-modal knowledge graphs
+│   └── lesson18/                # Advanced collaboration patterns
 └── requirements.txt             # Production dependencies
 ```
 
