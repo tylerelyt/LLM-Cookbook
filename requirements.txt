@@ -165,3 +165,10 @@ zstandard==0.23.0
 openai
 networkx
 matplotlib
+
+FlagEmbedding>=1.2.0
+dashscope>=1.17.0
+numpy>=1.24.0
+sentence-transformers>=2.2.0
+torch>=2.0.0
+transformers>=4.30.0
