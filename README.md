@@ -66,13 +66,25 @@ A practical workshop for building LLM applications from scratch. Learn by doing 
 git clone https://github.com/tylerelyt/LLM-Workshop.git
 cd LLM-Workshop
 
-# Install global dependencies
-pip install -r requirements.txt
+# Each lesson has its own dependencies - install what you need:
+# Chapter 1: Foundation
+pip install -r chapter1/lesson1/requirements.txt  # Agent Architectures
+pip install -r chapter1/lesson2/requirements.txt  # Mathematical Reasoning
+pip install -r chapter1/lesson3/requirements.txt  # Multi-modal Dialogs
 
-# For specific lessons, install their dependencies:
-# pip install -r chapter3/lesson10/requirements.txt  # RAG System
-# pip install -r chapter3/lesson11/requirements.txt  # Knowledge Graph
-# pip install -r chapter3/lesson12/requirements.txt  # NL2SQL
+# Chapter 2: Intermediate Processing  
+pip install -r chapter2/lesson6/requirements.txt  # Text Processing
+pip install -r chapter2/lesson7/requirements.txt  # Document Understanding
+pip install -r chapter2/lesson9/requirements.txt  # Content Transformation
+
+# Chapter 3: Advanced Knowledge Engineering
+pip install -r chapter3/lesson10/requirements.txt  # RAG System
+pip install -r chapter3/lesson11/requirements.txt  # Knowledge Graph
+pip install -r chapter3/lesson12/requirements.txt  # NL2SQL
+
+# Chapter 4: Expert Multi-Agent Systems
+pip install -r chapter4/lesson17/requirements.txt  # Agent Coordination
+pip install -r chapter4/lesson18/requirements.txt  # Advanced Collaboration
 ```
 
 ### Environment Setup
@@ -116,28 +128,41 @@ python demo.py
 LLM-Workshop/
 ├── chapter1/                    # Conversational Intelligence (Foundation)
 │   ├── lesson1/                 # Agent architectures & tool integration
+│   │   └── requirements.txt     # Flask, transformers, torch
 │   ├── lesson2/                 # Mathematical reasoning & expression parsing  
+│   │   └── requirements.txt     # sympy, scipy, mathematical libs
 │   ├── lesson3/                 # Multi-modal dialog systems
+│   │   └── requirements.txt     # Multi-modal processing
 │   ├── lesson4/                 # Advanced dialog patterns
+│   │   └── requirements.txt     # Conversation management
 │   └── lesson5/                 # Reasoning optimization
+│       └── requirements.txt     # Performance optimization
 ├── chapter2/                    # Intermediate Processing  
 │   ├── lesson6/                 # Advanced text processing
+│   │   └── requirements.txt     # ollama, NLP libraries
 │   ├── lesson7/                 # Document understanding
+│   │   └── requirements.txt     # langchain, document processing
 │   └── lesson9/                 # Content transformation
+│       └── requirements.txt     # Format conversion tools
 ├── chapter3/                    # Advanced Knowledge Engineering
 │   ├── lesson10/                # Production-grade RAG with BGE-m3
 │   │   ├── rag_demo.py
+│   │   ├── requirements.txt     # BGE models, RAG dependencies
 │   │   └── README.md
 │   ├── lesson11/                # Knowledge graph construction
 │   │   ├── knowledge_pipeline.py
+│   │   ├── requirements.txt     # networkx, pyvis, CoT reasoning
 │   │   └── examples/demo_outputs/
 │   └── lesson12/                # Enterprise NL2SQL systems
 │       ├── nl2sql_demo.py
+│       ├── requirements.txt     # SQL, vector search, analytics
 │       └── README.md
 ├── chapter4/                    # Expert-Level Multi-Agent Systems  
 │   ├── lesson17/                # Agent coordination frameworks
+│   │   └── requirements.txt     # Multi-agent dependencies
 │   └── lesson18/                # Advanced collaboration patterns
-└── requirements.txt             # Production dependencies
+│       └── requirements.txt     # Advanced collaboration dependencies
+└── README.md                    # Project documentation
 ```
 
 ## 🆘 Troubleshooting
