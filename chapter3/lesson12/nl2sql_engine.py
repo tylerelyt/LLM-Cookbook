@@ -165,7 +165,7 @@ class DBManager:
 
         logger.info("Creating enterprise BI schema (5 tables)...")
         self._create_enterprise_schema(cursor)
-            self._insert_sample_data(cursor)
+        self._insert_sample_data(cursor)
         
         conn.commit()
         conn.close()
@@ -215,8 +215,8 @@ class DBManager:
         
         # 4. 员工表 - 人力资源和组织层级
         cursor.execute("""
-CREATE TABLE employees (
-    id INTEGER PRIMARY KEY,
+        CREATE TABLE employees (
+            id INTEGER PRIMARY KEY,
             name TEXT NOT NULL, -- 员工姓名
             department_id INTEGER NOT NULL, -- 所属部门ID
             position TEXT, -- 职位名称，如：销售经理、开发工程师
@@ -224,13 +224,13 @@ CREATE TABLE employees (
             hire_date TEXT, -- 入职日期
             manager_id INTEGER, -- 直属上级经理ID，用于员工层级关系和管理效能分析，也可称为reports_to或supervisor_id
             FOREIGN KEY (department_id) REFERENCES departments (id),
-    FOREIGN KEY (manager_id) REFERENCES employees (id)
+            FOREIGN KEY (manager_id) REFERENCES employees (id)
         );""")
         
         # 5. 客户表 - 客户信息和分类
         cursor.execute("""
         CREATE TABLE customers (
-    id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY,
             name TEXT NOT NULL, -- 客户名称或公司名
             email TEXT, -- 联系邮箱
             region_id INTEGER NOT NULL, -- 所属销售区域
@@ -243,7 +243,7 @@ CREATE TABLE employees (
         # 6. 供应商表 - 供应链管理
         cursor.execute("""
         CREATE TABLE suppliers (
-    id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY,
             name TEXT NOT NULL, -- 供应商名称
             region_id INTEGER NOT NULL, -- 供应商所在地区
             contact_email TEXT, -- 联系邮箱
@@ -550,7 +550,7 @@ class VectorStore:
     def multi_path_retrieve_schemas(self, question: str, llm_provider, top_k_per_path: int = 3) -> List[TableSchema]:
         """使用LLM分析查询维度，然后多路召回DDL表结构"""
         
-        # 第一步：让LLM分析需要哪些查询维度
+        # 第一步：让LLM分析需要哪些数据维度
         analysis_prompt = f"""
 分析这个业务查询需要哪些数据维度，输出3-5个具体的查询方向。
 每个方向要使用最直接、简洁的关键词，便于匹配数据表名称。
@@ -617,7 +617,7 @@ class LLMProvider:
             )
         elif self.provider == "openai":
             self.client = OpenAI(api_key=api_key)
-            else:
+        else:
             raise ValueError(f"Unsupported LLM provider: {self.provider}")
         
         logger.info(f"LLMProvider initialized for '{self.provider}'.")
@@ -848,7 +848,7 @@ def run_demo():
         if not os.environ.get(api_key_env):
             print(f"\n❌ 错误：环境变量 '{api_key_env}' 未设置。")
             print("请设置您的API密钥以继续。")
-        return
+            return
     
         pipeline = NL2SQLPipeline(CONFIG)
         
@@ -885,19 +885,6 @@ def run_demo():
         logger.info("Starting enterprise NL2SQL demo")
         logger.info(f"Demo configuration: {len(demo_questions)} complex questions, 10 tables")
         logger.info("=" * 80)
-        
-        # 统计信息
-        import time
-        total_start_time = time.time()
-        demo_stats = {
-            "total_questions": len(demo_questions),
-            "successful_queries": 0,
-            "failed_queries": 0,
-            "total_tables_used": set(),
-            "total_execution_time": 0,
-            "performance_breakdown": [],
-            "schema_insufficient_queries": 0
-        }
         
         for i, demo in enumerate(demo_questions, 1):
             question = demo["question"]
@@ -974,8 +961,8 @@ def run_demo():
                 print(f"\nAI Analysis:")
                 print("=" * 50)
                 print(result['answer'])
-    print("=" * 50)
-    
+                print("=" * 50)
+                
                 if result['data']:
                     print(f"\nKey Data Summary ({len(result['data'])} records):")
                     for idx, record in enumerate(result['data'][:5], 1):
@@ -1037,7 +1024,7 @@ def run_demo():
 
     except (ValueError, ImportError) as e:
         print(f"\n❌ 设置过程中发生错误: {e}")
-        except Exception as e:
+    except Exception as e:
         logger.error("An unexpected error occurred during the demo.", exc_info=True)
         print(f"\n❌ 发生意外错误: {e}")
 
