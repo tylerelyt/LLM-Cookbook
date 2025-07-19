@@ -67,7 +67,7 @@ A practical workshop for building LLM applications from scratch. Learn by doing 
 - [BGE M3-Embedding: Multi-Lingual, Multi-Functionality, Multi-Granularity Text Embeddings Through Self-Knowledge Distillation](https://arxiv.org/abs/2402.03216) - Chen et al., 2024
 - [RAG vs Fine-tuning: Pipelines, Tradeoffs, and a Case Study on Agriculture](https://arxiv.org/abs/2401.08406) - Ovadia et al., 2024
 
-### 🤖 Chapter 4: Multi-Agent Orchestration
+### 🤖 Chapter 6: Multi-Agent Orchestration
 **Distributed AI coordination and collaboration patterns**
 - Inter-agent communication protocols and message passing
 - Task decomposition and hierarchical planning strategies
@@ -119,9 +119,9 @@ pip install -r chapter3/lesson1/requirements.txt  # RAG System
 pip install -r chapter3/lesson2/requirements.txt  # Knowledge Graph
 pip install -r chapter3/lesson3/requirements.txt  # NL2SQL
 
-# Chapter 4: Expert Multi-Agent Systems
-pip install -r chapter4/lesson1/requirements.txt  # Agent Coordination
-pip install -r chapter4/lesson2/requirements.txt  # Advanced Collaboration
+# Chapter 6: Expert Multi-Agent Systems
+pip install -r chapter6/lesson17/requirements.txt  # Agent Coordination
+pip install -r chapter6/lesson18/requirements.txt  # Advanced Collaboration
 
 # Chapter 5: Multimodal Models
 pip install -r chapter5/lesson1/requirements.txt  # Image Content Analysis
@@ -155,7 +155,7 @@ cd chapter3/lesson3
 python nl2sql_engine.py
 
 # Create multi-agent collaboration systems
-cd chapter4/lesson1  
+cd chapter6/lesson17  
 python agent_manager.py
 
 # Analyze images and documents
@@ -198,10 +198,10 @@ LLM-Workshop/
 │       ├── nl2sql_engine.py
 │       ├── requirements.txt     # SQL, vector search, analytics
 │       └── README.md
-├── chapter4/                    # Expert-Level Multi-Agent Systems  
-│   ├── lesson1/                 # Agent coordination frameworks
+├── chapter6/                    # Expert-Level Multi-Agent Systems  
+│   ├── lesson17/                # Agent coordination frameworks
 │   │   └── requirements.txt     # Multi-agent dependencies
-│   └── lesson2/                 # Advanced collaboration patterns
+│   └── lesson18/                # Advanced collaboration patterns
 │       └── requirements.txt     # Advanced collaboration dependencies
 ├── chapter5/                    # Multimodal Models
 │   ├── lesson1/                 # Image content analysis
