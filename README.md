@@ -67,18 +67,18 @@ A practical workshop for building LLM applications from scratch. Learn by doing 
 - [BGE M3-Embedding: Multi-Lingual, Multi-Functionality, Multi-Granularity Text Embeddings Through Self-Knowledge Distillation](https://arxiv.org/abs/2402.03216) - Chen et al., 2024
 - [RAG vs Fine-tuning: Pipelines, Tradeoffs, and a Case Study on Agriculture](https://arxiv.org/abs/2401.08406) - Ovadia et al., 2024
 
-### 🤖 Chapter 6: Multi-Agent Orchestration
-**Distributed AI coordination and collaboration patterns**
-- Inter-agent communication protocols and message passing
-- Task decomposition and hierarchical planning strategies
-- Consensus mechanisms and conflict resolution algorithms
-- Distributed reasoning and collaborative problem solving
+### 🧠 Chapter 4: Context Engineering
+**Advanced context management and optimization strategies**
+- KV-Cache optimization and prompt engineering techniques
+- Tool masking strategies and dynamic behavior control
+- Filesystem-based externalized memory systems
+- Attention recitation and goal focus management
+- Error preservation and failure learning mechanisms
 
 **📚 Paper Collection**
-- [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) - Yao et al., 2022
-- [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al., 2023
-- [Communicative Agents for Software Development](https://arxiv.org/abs/2307.07924) - Qian et al., 2023
-- [MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework](https://arxiv.org/abs/2308.00352) - Hong et al., 2023
+- [Attention Is All You Need](https://arxiv.org/abs/1706.03762) - Vaswani et al., 2017
+- [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) - Kwon et al., 2023
+- [FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](https://arxiv.org/abs/2307.08691) - Dao, 2023
 
 ### 🎨 Chapter 5: Multimodal Models
 **Advanced image and document processing**
@@ -91,6 +91,19 @@ A practical workshop for building LLM applications from scratch. Learn by doing 
 - [Qwen-VL: A Versatile Vision-Language Model for Understanding, Localization, Text Reading, and Beyond](https://arxiv.org/abs/2308.12966) - Bai et al., 2023
 - [LayoutParser: A Unified Toolkit for Deep Learning Based Document Image Analysis](https://arxiv.org/abs/2103.15348) - Shen et al., 2021
 - [Knowledge Graphs Meet Multi-Modal Learning: A Comprehensive Survey](https://arxiv.org/abs/2402.05391) - Chen et al., 2024
+
+### 🤖 Chapter 6: Expert Multi-Agent Orchestration
+**Advanced distributed AI coordination and collaboration patterns**
+- Advanced inter-agent communication protocols and message passing
+- Complex task decomposition and hierarchical planning strategies
+- Advanced consensus mechanisms and conflict resolution algorithms
+- Distributed reasoning and collaborative problem solving
+
+**📚 Paper Collection**
+- [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) - Yao et al., 2022
+- [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al., 2023
+- [Communicative Agents for Software Development](https://arxiv.org/abs/2307.07924) - Qian et al., 2023
+- [MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework](https://arxiv.org/abs/2308.00352) - Hong et al., 2023
 
 ## ⚡ Quick Start
 
@@ -119,13 +132,20 @@ pip install -r chapter3/lesson1/requirements.txt  # RAG System
 pip install -r chapter3/lesson2/requirements.txt  # Knowledge Graph
 pip install -r chapter3/lesson3/requirements.txt  # NL2SQL
 
-# Chapter 6: Expert Multi-Agent Systems
-pip install -r chapter6/lesson17/requirements.txt  # Agent Coordination
-pip install -r chapter6/lesson18/requirements.txt  # Advanced Collaboration
+# Chapter 4: Context Engineering
+pip install -r chapter4/lesson1/requirements.txt  # KV-Cache Optimization
+pip install -r chapter4/lesson2/requirements.txt  # Tool Masking Strategy
+pip install -r chapter4/lesson3/requirements.txt  # Filesystem Memory
+pip install -r chapter4/lesson4/requirements.txt  # Attention Recitation
+pip install -r chapter4/lesson5/requirements.txt  # Error Preservation
 
 # Chapter 5: Multimodal Models
 pip install -r chapter5/lesson1/requirements.txt  # Image Content Analysis
 pip install -r chapter5/lesson2/requirements.txt  # Document Processing
+
+# Chapter 6: Expert Multi-Agent Orchestration
+pip install -r chapter6/lesson17/requirements.txt  # Agent Coordination
+pip install -r chapter6/lesson18/requirements.txt  # Advanced Collaboration
 ```
 
 ### Environment Setup
@@ -154,6 +174,10 @@ python rag_pipeline.py
 cd chapter3/lesson3
 python nl2sql_engine.py
 
+# Build context engineering systems
+cd chapter4/lesson1
+python example.py
+
 # Create multi-agent collaboration systems
 cd chapter6/lesson17  
 python agent_manager.py
@@ -163,56 +187,7 @@ cd chapter5/lesson1
 python image_analyzer.py
 ```
 
-## 🏛️ Project Structure
 
-```
-LLM-Workshop/
-├── chapter1/                    # Conversational Intelligence (Foundation)
-│   ├── lesson1/                 # Agent architectures & tool integration
-│   │   └── requirements.txt     # Flask, transformers, torch
-│   ├── lesson2/                 # Mathematical reasoning & expression parsing  
-│   │   └── requirements.txt     # sympy, scipy, mathematical libs
-│   ├── lesson3/                 # Multi-modal dialog systems
-│   │   └── requirements.txt     # Multi-modal processing
-│   ├── lesson4/                 # Advanced dialog patterns
-│   │   └── requirements.txt     # Conversation management
-│   └── lesson5/                 # Reasoning optimization
-│       └── requirements.txt     # Performance optimization
-├── chapter2/                    # Advanced Reasoning
-│   ├── lesson1/                 # Chain-of-thought reasoning
-│   │   └── requirements.txt     # Reasoning frameworks, CoT libs
-│   ├── lesson2/                 # Zero-shot problem solving
-│   │   └── requirements.txt     # Cognitive processing tools
-│   └── lesson3/                 # Tree-based exploration
-│       └── requirements.txt     # Advanced reasoning patterns
-├── chapter3/                    # Advanced Knowledge Engineering
-│   ├── lesson1/                 # Production-grade RAG with BGE-m3
-│   │   ├── rag_pipeline.py
-│   │   ├── requirements.txt     # BGE models, RAG dependencies
-│   │   └── README.md
-│   ├── lesson2/                 # Knowledge graph construction
-│   │   ├── knowledge_pipeline.py
-│   │   ├── requirements.txt     # networkx, pyvis, CoT reasoning
-│   │   └── examples/outputs/
-│   └── lesson3/                 # Enterprise NL2SQL systems
-│       ├── nl2sql_engine.py
-│       ├── requirements.txt     # SQL, vector search, analytics
-│       └── README.md
-├── chapter6/                    # Expert-Level Multi-Agent Systems  
-│   ├── lesson17/                # Agent coordination frameworks
-│   │   └── requirements.txt     # Multi-agent dependencies
-│   └── lesson18/                # Advanced collaboration patterns
-│       └── requirements.txt     # Advanced collaboration dependencies
-├── chapter5/                    # Multimodal Models
-│   ├── lesson1/                 # Image content analysis
-│   │   ├── image_analyzer.py    # Content-focused image analysis
-│   │   ├── requirements.txt     # openai, Pillow, python-dotenv
-│   │   └── sample_image.jpg     # Example test image
-│   └── lesson2/                 # Document layout analysis
-│       ├── requirements.txt     # LayoutParser dependencies
-│       └── README.md
-└── README.md                    # Project documentation
-```
 
 ## 🆘 Troubleshooting
 
