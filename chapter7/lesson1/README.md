@@ -1,54 +1,56 @@
-# Lesson 1: Few-shot 格式指令微调数据构造演示
+# Lesson 1: Automated Few-shot Instruction Data Construction
 
-本演示展示如何将结构化数据集转换为 Few-shot 格式的指令微调数据。
+This lesson demonstrates how to automatically construct few-shot instruction fine-tuning data from structured datasets. Learn the systematic approach to transform raw data into high-quality training examples for instruction-following models.
 
-## 功能特点
+## Key Automation Features
 
-- 支持多种任务类型：情感分析、文本分类、问答、翻译
-- 自动生成多样化的指令模板
-- 构造 Few-shot 示例（任务描述 + 示例 + 具体输入）
-- 输出标准 JSONL 格式
+- **Multi-task Support**: Automatic handling of sentiment analysis, classification, QA, and translation
+- **Template Generation**: Automatically creates diverse instruction templates for the same task
+- **Few-shot Construction**: Systematically builds instruction-example-input patterns
+- **Format Standardization**: Outputs ready-to-use JSONL format for instruction fine-tuning
 
-## 快速演示
+## Quick Demo
 
 ```bash
-# 安装依赖
+# Install dependencies
 pip install -r requirements.txt
 
-# 演示：从情感分类数据集构造 Few-shot 指令格式
+# Demo: Construct few-shot instruction data from sentiment dataset
 python construct_fewshot.py \
   --input-file data/sentiment_demo.json \
   --task-type sentiment \
   --output-path data/output.jsonl
 ```
 
-## 支持的任务类型
+## Automation Process
 
-- `sentiment`: 情感分析
-- `classification`: 文本分类  
-- `qa`: 问答
-- `translate`: 翻译
+### 1. Task Type Detection
+- `sentiment`: Sentiment analysis tasks
+- `classification`: General text classification
+- `qa`: Question-answering tasks
+- `translate`: Translation tasks
 
-## 输入数据格式
+### 2. Data Format Handling
+Automatically processes CSV, JSON, JSONL, TSV formats with intelligent field recognition.
 
-支持 CSV、JSON、JSONL、TSV 格式，自动识别字段名。
+### 3. Instruction Generation Pipeline
+1. **Template Selection**: Randomly picks from diverse instruction templates
+2. **Example Pairing**: Automatically selects relevant examples for few-shot learning
+3. **Format Construction**: Builds instruction-input-output triplets
+4. **Quality Assurance**: Validates data completeness and format consistency
 
-## 输出格式
+## Example Data Features
 
-生成的 JSONL 文件包含：
-- `instruction`: Few-shot 指令（任务描述 + 示例 + 具体输入）
-- `input`: 空字符串
-- `output`: 目标答案
+- **Diverse Expressions**: English, Chinese, and mixed-language content
+- **Rich Emotions**: Various positive and negative sentiment expressions
+- **Real Scenarios**: Authentic movie review language patterns
+- **Complex Structures**: Simple to complex emotional expressions
 
-## 示例数据特点
+## Automated Output Example
 
-- **多样化表达**：包含英文、中文、中英文混合的评论
-- **丰富情感**：正面、负面情感的不同表达方式
-- **真实场景**：电影评论的真实语言表达
-- **复杂结构**：包含简单和复杂的情感表达
+**Input Data**: `{"sentence": "The plot is predictable and the acting is dull.", "label": 0}`
 
-## 示例输出
-
+**Generated Instruction**:
 ```json
 {
   "instruction": "判断下面这句话表达的是积极情绪还是消极情绪？\n例子：\n句子：\"A masterpiece, a profoundly moving film.\" 情绪：正面\n现在请判断下面这个句子：\n句子：\"The plot is predictable and the acting is dull.\" 情绪：",
@@ -56,5 +58,13 @@ python construct_fewshot.py \
   "output": "负面"
 }
 ```
+
+## Why Automation Matters
+
+1. **Scale**: Process thousands of examples automatically
+2. **Consistency**: Maintain uniform instruction format across datasets
+3. **Diversity**: Generate multiple template variations to improve robustness
+4. **Efficiency**: Reduce manual data preparation time from days to minutes
+5. **Quality**: Systematic approach ensures complete and valid instruction data
 
 

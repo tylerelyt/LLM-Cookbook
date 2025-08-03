@@ -13,7 +13,8 @@ from tqdm import tqdm
 app = typer.Typer(add_completion=False, no_args_is_help=True)
 
 
-# Few-shot 指令模板 - 任务描述 + 示例 + 具体输入
+# Automated Few-shot Instruction Templates - Task Description + Example + Specific Input
+# These templates enable automatic generation of diverse instruction formats for the same task
 FEWSHOT_TEMPLATES = {
     "sentiment": [
         "判断下面这句话表达的是积极情绪还是消极情绪？",
@@ -71,7 +72,17 @@ def construct_fewshot_instruction(
     target_idx: int,
     num_examples: int = 1
 ) -> Dict[str, str]:
-    """构造包含示例的 Few-shot 指令数据"""
+    """
+    Automatically construct Few-shot instruction data with examples
+    
+    This is the core automation function that:
+    1. Randomly selects appropriate examples from the dataset
+    2. Picks diverse instruction templates to improve robustness
+    3. Constructs the complete instruction-input-output format
+    4. Ensures consistent quality across all generated examples
+    
+    Returns standardized instruction fine-tuning format ready for training.
+    """
     
     # 获取目标数据项
     target_item = data[target_idx]
@@ -236,7 +247,20 @@ def main(
     max_samples: int = typer.Option(-1, help="最大处理样本数，-1表示处理所有"),
     template_variety: bool = typer.Option(True, help="是否使用多样化的指令模板"),
 ):
-    """从现有数据集构造Few-shot格式的指令微调数据"""
+    """
+    Automated Few-shot Instruction Data Construction for Fine-tuning
+    
+    This tool demonstrates how to systematically convert structured datasets 
+    into high-quality instruction fine-tuning data. Key automation features:
+    
+    - Intelligent field recognition across multiple data formats
+    - Automatic template selection for instruction diversity  
+    - Systematic few-shot example pairing
+    - Batch processing with progress tracking
+    - Quality validation and error handling
+    
+    Perfect for creating large-scale instruction datasets efficiently.
+    """
     
     # 检查任务类型
     if task_type not in FEWSHOT_TEMPLATES:
