@@ -37,7 +37,7 @@ A practical workshop for building LLM applications from scratch. Learn by doing 
 **📚 Paper Collection**
 - [Attention Is All You Need](https://arxiv.org/abs/1706.03762) - Vaswani et al., 2017
 - [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805) - Devlin et al., 2018
-- [Language Models are Unsupervised Multitask Learners](https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) - Radford et al., 2019
+- [Language Models are Unsupervised Multitask Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) - Radford et al., 2019
 - [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401) - Lewis et al., 2020
 
 ### 🧠 Chapter 2: Advanced Reasoning
@@ -105,6 +105,36 @@ A practical workshop for building LLM applications from scratch. Learn by doing 
 - [Communicative Agents for Software Development](https://arxiv.org/abs/2307.07924) - Qian et al., 2023
 - [MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework](https://arxiv.org/abs/2308.00352) - Hong et al., 2023
 
+### 🧪 Chapter 7: Model Fine-Tuning Data Construction
+**Comprehensive data pipeline for instruction tuning and preference learning**
+- Few-shot format instruction data construction from structured datasets
+- Self-Instruct automated data generation and expansion
+- Alpaca-style supervised fine-tuning data preparation
+- RLHF preference data construction for reward modeling
+- GRPO group relative preference optimization data
+
+**📚 Paper Collection**
+- [Self-Instruct: Aligning Language Models with Self Generated Instructions](https://arxiv.org/abs/2212.10560) - Wang et al., 2022
+- [Stanford Alpaca: An Instruction-following LLaMA Model](https://github.com/tatsu-lab/stanford_alpaca)
+- [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155) - Ouyang et al., 2022
+- [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) - Bai et al., 2022
+
+### 🧠 Chapter 8: Fine-Tuning Fundamentals
+**Historical foundations and modern fine-tuning principles**
+- GPT-1 style fine-tuning with frozen embeddings and linear classifiers
+- Feature-based transfer learning vs end-to-end fine-tuning
+- DashScope embedding integration for sentiment classification
+- Educational progression from basic to advanced fine-tuning techniques
+- Practical implementation of early fine-tuning methodologies
+
+**📚 Paper Collection**
+- [Improving Language Understanding by Generative Pre-Training](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf) - Radford et al., 2018 (GPT-1)
+- [Universal Language Model Fine-tuning for Text Classification](https://arxiv.org/abs/1801.06146) - Howard & Ruder, 2018 (ULMFiT)
+- [Language Models are Unsupervised Multitask Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) - Radford et al., 2019 (GPT-2)
+- [Parameter-Efficient Transfer Learning for NLP](https://arxiv.org/abs/1902.00751) - Houlsby et al., 2019
+
+
+
 ## ⚡ Quick Start
 
 ### Prerequisites
@@ -146,6 +176,16 @@ pip install -r chapter5/lesson2/requirements.txt  # Document Processing
 # Chapter 6: Expert Multi-Agent Orchestration
 pip install -r chapter6/lesson17/requirements.txt  # Agent Coordination
 pip install -r chapter6/lesson18/requirements.txt  # Advanced Collaboration
+
+# Chapter 7: Model Fine-Tuning Data Construction
+pip install -r chapter7/lesson1/requirements.txt  # Few-shot Data Construction
+pip install -r chapter7/lesson2/requirements.txt  # Self-Instruct Generation
+pip install -r chapter7/lesson3/requirements.txt  # Alpaca Data Preparation
+pip install -r chapter7/lesson4/requirements.txt  # RLHF Preference Data
+pip install -r chapter7/lesson5/requirements.txt  # GRPO Group Preference
+
+# Chapter 8: Fine-Tuning Fundamentals
+pip install -r chapter8/lesson1/requirements.txt  # GPT-1 Style Fine-tuning
 ```
 
 ### Environment Setup
@@ -185,6 +225,26 @@ python agent_manager.py
 # Analyze images and documents
 cd chapter5/lesson1
 python image_analyzer.py
+
+# Build Few-shot instruction data from structured datasets
+cd chapter7/lesson1
+python construct_fewshot.py --input-file data/sentiment_demo.json --task-type sentiment --output-path data/fewshot_sentiment.jsonl
+
+# Generate Self-Instruct data expansion
+cd chapter7/lesson2
+python self_instruct.py --provider dashscope --model qwen-plus --num-instructions 100 --output-path data/self_instruct.jsonl
+
+# Convert to Alpaca format for fine-tuning
+cd chapter7/lesson3
+python alpaca_constructor.py --input-file ../lesson1/data/fewshot_sentiment.jsonl --conversion-type fewshot_to_alpaca --output-path data/alpaca_data.jsonl
+
+# Construct GRPO preference groups for advanced RLHF
+cd chapter7/lesson5
+python grpo_constructor.py --input-file ../lesson3/data/alpaca_data.jsonl --method generate_groups --group-size 4 --output-path data/grpo_groups.jsonl
+
+# Learn GPT-1 fine-tuning principles with DashScope embeddings
+cd chapter8/lesson1
+python dashscope_lr_sentiment.py --input-file data/sentiment_demo.json --batch-size 5
 ```
 
 
