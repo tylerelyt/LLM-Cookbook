@@ -1,40 +1,50 @@
-# Chapter 8 Lesson 1: DashScope Embedding + 逻辑回归情感分类
+# Chapter 8 Lesson 1: GPT-1 Fine-tuning Principles - Embedding + Logistic Regression
 
-本课程演示如何使用 DashScope Embedding API 生成文本向量，然后训练逻辑回归模型进行情感分类。
+This lesson demonstrates the fundamental principles behind GPT-1 fine-tuning by using pre-trained embeddings (DashScope) combined with a simple classifier (Logistic Regression) for sentiment analysis. This approach mirrors the original GPT-1 methodology of leveraging pre-trained representations for downstream tasks.
 
-## 功能特点
+## GPT-1 Fine-tuning Concepts
 
-- **DashScope Embedding**: 使用阿里云 DashScope 的 text-embedding-v1 模型
-- **逻辑回归分类**: 简单高效的线性分类器
-- **多语言支持**: 支持中英文混合文本
-- **完整流程**: 从数据加载到模型训练、评估、预测的完整流程
-- **可视化结果**: 自动生成混淆矩阵和性能对比图表
+This implementation demonstrates key concepts from the original GPT-1 paper:
 
-## 技术架构
+- **Pre-trained Representations**: Uses DashScope embeddings as frozen feature extractors (similar to GPT-1's pre-trained transformer)
+- **Task-specific Head**: Logistic regression serves as the classification head for sentiment analysis
+- **Transfer Learning**: Leverages general language understanding for specific downstream tasks
+- **Feature-based Approach**: Shows the foundation before end-to-end fine-tuning became standard
+
+## Features
+
+- **Pre-trained Embeddings**: DashScope text-embedding-v1 as the feature extractor
+- **Linear Classifier**: Logistic regression as the task-specific head
+- **Multilingual Support**: Chinese-English mixed text processing
+- **Complete Pipeline**: Training, evaluation, and inference workflow
+- **Educational Focus**: Clear demonstration of early fine-tuning principles
+
+## Technical Architecture (GPT-1 Style)
 
 ```
-文本数据 → DashScope Embedding → 特征标准化 → 逻辑回归 → 情感分类
+Text Input → Pre-trained Embeddings → [FROZEN] → Linear Classifier → Task Output
+            (DashScope API)                        (Logistic Regression)   (Sentiment)
 ```
 
-## 环境准备
+## Environment Setup
 
 ```bash
-# 安装依赖
+# Install dependencies
 pip install -r requirements.txt
 
-# 设置 API Key
+# Set API Key
 export DASHSCOPE_API_KEY="your-dashscope-api-key"
 ```
 
-## 快速开始
+## Quick Start
 
 ```bash
 cd chapter8/lesson1
 
-# 基础演示
+# Basic demo
 python dashscope_lr_sentiment.py
 
-# 自定义参数
+# Custom parameters
 python dashscope_lr_sentiment.py \
   --input-file data/sentiment_demo.json \
   --test-size 0.2 \
@@ -42,19 +52,19 @@ python dashscope_lr_sentiment.py \
   --model-path models/my_sentiment_model.pkl
 ```
 
-## 参数说明
+## Parameters
 
-- `--input-file`: 输入数据文件路径 (JSON格式)
-- `--test-size`: 测试集比例，默认 0.2
-- `--random-state`: 随机种子，默认 42
-- `--batch-size`: Embedding 生成批次大小，默认 32
-- `--model-path`: 模型保存路径，默认 models/dashscope_lr_sentiment.pkl
-- `--results-path`: 结果保存目录，默认 results/
-- `--plot-results`: 是否绘制结果图表，默认 True
+- `--input-file`: Input data file path (JSON format)
+- `--test-size`: Test set ratio, default 0.2
+- `--random-state`: Random seed, default 42
+- `--batch-size`: Embedding generation batch size, default 32
+- `--model-path`: Model save path, default models/dashscope_lr_sentiment.pkl
+- `--results-path`: Results save directory, default results/
+- `--plot-results`: Whether to plot results charts, default True
 
-## 输入数据格式
+## Input Data Format
 
-JSON 格式，包含 sentence 和 label 字段：
+JSON format with sentence and label fields:
 
 ```json
 [
@@ -65,87 +75,95 @@ JSON 格式，包含 sentence 和 label 字段：
 ]
 ```
 
-## 输出结果
+## Output Results
 
-### 1. 模型文件
-- `models/dashscope_lr_sentiment.pkl`: 训练好的模型
+### 1. Model Files
+- `models/dashscope_lr_sentiment.pkl`: Trained model
 
-### 2. 评估结果
-- `results/classification_results.json`: 详细的分类报告
-- `results/classification_results.png`: 可视化图表
+### 2. Evaluation Results
+- `results/classification_results.json`: Detailed classification report
+- `results/classification_results.png`: Visualization charts
 
-### 3. 控制台输出
-- 训练过程信息
-- 准确率、精确率、召回率、F1分数
-- 演示预测结果
+### 3. Console Output
+- Training process information
+- Accuracy, precision, recall, F1-score metrics
+- Demo prediction results
 
-## 性能指标
+## Performance Metrics
 
-模型会输出以下性能指标：
-- **准确率 (Accuracy)**: 整体分类正确率
-- **精确率 (Precision)**: 预测为正面的样本中真正为正面的比例
-- **召回率 (Recall)**: 真实正面样本中被正确预测的比例
-- **F1分数**: 精确率和召回率的调和平均
+The model outputs the following performance metrics:
+- **Accuracy**: Overall classification accuracy
+- **Precision**: Proportion of true positives among predicted positives
+- **Recall**: Proportion of true positives among actual positives
+- **F1-score**: Harmonic mean of precision and recall
 
-## 使用示例
+## Usage Examples
 
-### 训练模型
+### Training Model
 ```python
 from dashscope_lr_sentiment import DashScopeSentimentClassifier
 
-# 初始化分类器
+# Initialize classifier
 classifier = DashScopeSentimentClassifier()
 
-# 加载数据
+# Load data
 texts, labels = classifier.load_data("data/sentiment_demo.json")
 
-# 生成 Embedding
+# Generate embeddings
 embeddings = classifier.generate_embeddings(texts)
 
-# 训练模型
-# ... (自动处理数据划分和训练)
+# Train model
+# ... (automatic data splitting and training)
 ```
 
-### 预测新文本
+### Predicting New Text
 ```python
-# 预测单个文本
+# Predict single text
 texts = ["这部电影真的很棒！", "剧情太无聊了"]
 predictions, probabilities = classifier.predict(texts)
 
 for text, pred, prob in zip(texts, predictions, probabilities):
-    sentiment = "正面" if pred == 1 else "负面"
+    sentiment = "Positive" if pred == 1 else "Negative"
     confidence = max(prob)
     print(f"{text} -> {sentiment} ({confidence:.3f})")
 ```
 
-### 加载已训练模型
+### Loading Trained Model
 ```python
-# 加载模型
+# Load model
 classifier = DashScopeSentimentClassifier()
 classifier.load_model("models/dashscope_lr_sentiment.pkl")
 
-# 直接预测
-predictions, probabilities = classifier.predict(["新文本"])
+# Direct prediction
+predictions, probabilities = classifier.predict(["New text"])
 ```
 
-## 优势特点
+## Educational Value (GPT-1 Principles)
 
-1. **高效性**: DashScope 提供高质量的文本表示
-2. **轻量级**: 逻辑回归模型训练快速，推理高效
-3. **可解释性**: 线性模型易于理解和调试
-4. **多语言**: 支持中英文混合文本
-5. **完整流程**: 从数据处理到模型部署的完整解决方案
+1. **Historical Significance**: Demonstrates the foundational approach that led to modern fine-tuning
+2. **Conceptual Clarity**: Separates feature extraction from task-specific learning
+3. **Efficiency**: Shows how frozen embeddings can be effective for many tasks
+4. **Interpretability**: Linear head makes decision boundaries more interpretable
+5. **Foundation Knowledge**: Essential understanding before exploring end-to-end fine-tuning
 
-## 注意事项
+## Notes
 
-- 需要设置 DASHSCOPE_API_KEY 环境变量
-- API 调用会产生费用，请注意控制批次大小
-- 数据量较少时可能需要调整模型参数
-- 逻辑回归适合线性可分的数据
+- Requires DASHSCOPE_API_KEY environment variable
+- API calls incur costs, please control batch sizes
+- May need parameter tuning for small datasets
+- Logistic regression works best for linearly separable data
 
-## 扩展应用
+## Extensions & Next Steps
 
-- 可以替换为其他分类器 (SVM, Random Forest 等)
-- 支持多分类任务扩展
-- 可以集成到 Web 服务中
-- 支持增量学习和模型更新
+- **Other Classifiers**: Replace logistic regression with SVM, Random Forest, etc.
+- **Multi-class Tasks**: Extend to multi-class classification problems
+- **End-to-end Fine-tuning**: Progress to full transformer fine-tuning (GPT-2+ style)
+- **Modern Approaches**: Compare with recent fine-tuning methods (LoRA, QLoRA, etc.)
+- **Production Deployment**: Scale to larger datasets and real applications
+
+## Learning Path
+
+1. **Start Here**: Understand feature-based fine-tuning (this lesson)
+2. **Next**: Explore full transformer fine-tuning with gradient updates
+3. **Advanced**: Study parameter-efficient fine-tuning methods
+4. **Modern**: Learn about instruction tuning and RLHF

@@ -22,7 +22,17 @@ app = typer.Typer(add_completion=False, no_args_is_help=True)
 
 
 class DashScopeSentimentClassifier:
-    """使用 DashScope Embedding 训练 LR 进行情感分类"""
+    """
+    GPT-1 Style Fine-tuning: DashScope Embedding + Logistic Regression
+    
+    This class demonstrates the fundamental principles of GPT-1 fine-tuning:
+    1. Use pre-trained embeddings as frozen feature extractors
+    2. Train only a simple linear classifier on top
+    3. Leverage transfer learning for downstream tasks
+    
+    This approach mirrors the original GPT-1 methodology before end-to-end
+    fine-tuning became the standard practice.
+    """
     
     def __init__(self, model_name: str = "text-embedding-v1"):
         """
@@ -71,8 +81,13 @@ class DashScopeSentimentClassifier:
         return texts, labels
     
     def generate_embeddings(self, texts: List[str], batch_size: int = 10) -> np.ndarray:
-        """使用 DashScope 生成文本 Embedding"""
-        print("生成文本 Embedding...")
+        """
+        Generate text embeddings using DashScope API (GPT-1 Style Feature Extraction)
+        
+        This simulates the frozen pre-trained representation layer in GPT-1 fine-tuning.
+        The embeddings are NOT updated during training, only the classifier head is trained.
+        """
+        print("Generating text embeddings (frozen features)...")
         
         embeddings = []
         
@@ -109,8 +124,15 @@ class DashScopeSentimentClassifier:
     
     def train(self, X_train: np.ndarray, y_train: np.ndarray, 
               X_val: np.ndarray, y_val: np.ndarray) -> Dict:
-        """训练逻辑回归分类器"""
-        print("训练逻辑回归分类器...")
+        """
+        Train the task-specific classifier head (GPT-1 Style Fine-tuning)
+        
+        This demonstrates the core principle of GPT-1 fine-tuning:
+        - Pre-trained embeddings are frozen (no gradient updates)
+        - Only the classifier head (logistic regression) is trained
+        - This is much faster and requires less data than end-to-end training
+        """
+        print("Training classifier head (GPT-1 style fine-tuning)...")
         
         # 标准化特征
         X_train_scaled = self.scaler.fit_transform(X_train)
@@ -265,7 +287,17 @@ def main(
     results_path: str = typer.Option("results/", help="结果保存目录"),
     plot_results: bool = typer.Option(True, help="是否绘制结果图表"),
 ):
-    """使用 DashScope Embedding 训练 LR 进行情感分类"""
+    """
+    GPT-1 Fine-tuning Demonstration: Pre-trained Embeddings + Linear Classifier
+    
+    This script demonstrates the fundamental principles behind GPT-1 fine-tuning:
+    1. Use frozen pre-trained representations (DashScope embeddings)
+    2. Train only a simple classifier head (Logistic Regression)
+    3. Achieve strong performance with minimal training
+    
+    This approach was revolutionary in showing that pre-trained language models
+    could be effectively adapted to downstream tasks with simple modifications.
+    """
     
     # 创建结果目录
     os.makedirs(os.path.dirname(model_path), exist_ok=True)
