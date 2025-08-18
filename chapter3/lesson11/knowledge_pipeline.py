@@ -271,9 +271,11 @@ CONTEXT_AWARE_ENTITY_LINKING_PROMPT = """-任务目标-
 # =============================================================================
 LLM_MODEL = os.environ.get("LLM_MODEL", "qwen-plus")
 DASHSCOPE_API_KEY = os.environ.get("DASHSCOPE_API_KEY")
-if not DASHSCOPE_API_KEY:
-    raise ValueError("请设置环境变量 DASHSCOPE_API_KEY。在 ~/.bashrc 中添加：export DASHSCOPE_API_KEY='your_api_key'")
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+
+# 优先检查 DashScope，如果都没有则提示
+if not DASHSCOPE_API_KEY and not OPENAI_API_KEY:
+    raise ValueError("请设置 DASHSCOPE_API_KEY 或 OPENAI_API_KEY 环境变量")
 DEFAULT_DATA_DIR = Path("examples/demo_outputs")
 
 try:
@@ -282,18 +284,20 @@ except ImportError:
     OpenAI = None
 
 def get_llm_client() -> Any:
-    # (This function is unchanged from the previous version)
+    """获取 LLM 客户端，优先使用 DashScope"""
     if OpenAI is None:
         raise RuntimeError("The 'openai' Python SDK is not installed. Please run 'pip install openai'.")
-    provider = "dashscope" if "qwen" in LLM_MODEL.lower() else "openai"
-    api_key, base_url = None, None
-    if provider == "dashscope":
+    
+    # 优先使用 DashScope
+    if DASHSCOPE_API_KEY:
         api_key, base_url = DASHSCOPE_API_KEY, "https://dashscope.aliyuncs.com/compatible-mode/v1"
-        if not api_key: raise ValueError("DASHSCOPE_API_KEY environment variable not set.")
+        print(f"✅ Using DashScope API with model: {LLM_MODEL}")
+    elif OPENAI_API_KEY:
+        api_key, base_url = OPENAI_API_KEY, None
+        print(f"✅ Using OpenAI API with model: {LLM_MODEL}")
     else:
-        api_key = OPENAI_API_KEY
-        if not api_key: raise ValueError("OPENAI_API_KEY environment variable not set.")
-    print(f"✅ Using {provider.title()} API with model: {LLM_MODEL}")
+        raise ValueError("请设置 DASHSCOPE_API_KEY 或 OPENAI_API_KEY 环境变量")
+    
     return OpenAI(api_key=api_key, base_url=base_url)
 
 # =============================================================================

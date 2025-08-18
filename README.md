@@ -188,9 +188,10 @@ pip install -r chapter8/lesson1/requirements.txt  # GPT-1 Style Fine-tuning
 
 ### Environment Setup
 ```bash
-# Required: Set your LLM API key
+# Required: Set your LLM API key (DashScope is default and recommended)
 export DASHSCOPE_API_KEY="your-dashscope-key"
-# or
+
+# Optional: OpenAI as backup (some exercises support both)
 export OPENAI_API_KEY="your-openai-key"
 
 # Recommended: Use virtual environment

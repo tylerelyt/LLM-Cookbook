@@ -35,9 +35,10 @@ This chapter focuses on constructing high-quality training data for various larg
 
 ### Environment Setup
 ```bash
-# Set API keys
-export DASHSCOPE_API_KEY="your-api-key"
-export OPENAI_API_KEY="your-api-key"
+# Set API keys (DashScope is default and recommended)
+export DASHSCOPE_API_KEY="your-dashscope-key"
+# Optional: OpenAI as backup
+export OPENAI_API_KEY="your-openai-key"
 
 # Install dependencies
 pip install -r lesson1/requirements.txt
