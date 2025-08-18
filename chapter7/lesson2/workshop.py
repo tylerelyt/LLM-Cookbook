@@ -1,5 +1,7 @@
 import os
 import json
+import logging
+import time
 from typing import List, Dict, Tuple, Optional
 
 import orjson
@@ -193,14 +195,40 @@ Input: <与标签一致的文本或内容>
 
 
 def parse_io_from_text(text: str) -> Tuple[str, str]:
-    input_text = ""
-    output_text = ""
-    for line in text.splitlines():
-        line = line.strip()
-        if line.lower().startswith("input:"):
-            input_text = line.split(":", 1)[1].strip()
-        elif line.lower().startswith("output:"):
-            output_text = line.split(":", 1)[1].strip()
+    """解析可能为多行块的 Input/Output。
+    规则：
+    - 遇到以 "Input:" 或 "Output:" 开头的行后，进入对应段落，收集后续行，直到遇到另一段落标签或文本结束。
+    - 标签行后同一行的内容（冒号后）也会并入当前段落。
+    """
+    lines = [ln.rstrip() for ln in text.splitlines()]
+    collect_input: List[str] = []
+    collect_output: List[str] = []
+    mode: Optional[str] = None  # "input" | "output" | None
+
+    def starts_with_label(s: str, label: str) -> bool:
+        return s.lower().startswith(label)
+
+    for raw in lines:
+        line = raw.strip()
+        if starts_with_label(line, "input:"):
+            mode = "input"
+            collect_input.append(line.split(":", 1)[1].strip())
+            continue
+        if starts_with_label(line, "output:"):
+            mode = "output"
+            collect_output.append(line.split(":", 1)[1].strip())
+            continue
+
+        if mode == "input":
+            collect_input.append(raw)
+        elif mode == "output":
+            collect_output.append(raw)
+        else:
+            # 未显式进入段落的散落文本，忽略
+            pass
+
+    input_text = "\n".join([s for s in collect_input if s]).strip()
+    output_text = "\n".join([s for s in collect_output if s]).strip()
     return input_text, output_text
 
 
@@ -255,6 +283,14 @@ def _ensure_dir(path: str) -> None:
     os.makedirs(path, exist_ok=True)
 
 
+def _setup_logging(level: int = logging.INFO) -> None:
+    logging.basicConfig(
+        level=level,
+        format="%(asctime)s | %(levelname)s | %(message)s",
+        datefmt="%H:%M:%S",
+    )
+
+
 def step1_generate_instructions(
     provider: str,
     model: str,
@@ -266,19 +302,25 @@ def step1_generate_instructions(
 ) -> List[str]:
     seed_text = "\n".join(f"- {s}" for s in seed_tasks)
     expanded_instructions: List[str] = []
+    start_ts = time.time()
     while len(expanded_instructions) < num_instructions:
         prompt = INSTRUCTION_EXPAND_PROMPT.format(seed_list=seed_text)
-        text = call_model(provider.lower(), model, prompt, max_tokens=max_tokens, temperature=temperature)
+        try:
+            text = call_model(provider.lower(), model, prompt, max_tokens=max_tokens, temperature=temperature)
+        except Exception as e:
+            logging.error(f"[Step1] 模型调用失败，将重试。error={e}")
+            continue
         candidates = [line.strip("- ").strip() for line in text.splitlines() if line.strip()]
+        logging.debug(f"[Step1] 本次生成候选 {len(candidates)} 条，示例：{candidates[:2]}")
         expanded_instructions.extend(candidates)
         expanded_instructions = deduplicate_strings(expanded_instructions)
-        print(f"[Step1] 当前已生成 {len(expanded_instructions)} 条指令…")
+        logging.info(f"[Step1] 当前累计 {len(expanded_instructions)} 条指令…")
 
     expanded_instructions = expanded_instructions[:num_instructions]
     # 保存为 JSONL（每行一个对象）
     step1_path = os.path.join(out_dir, "step1_instructions.jsonl")
     save_jsonl([{"instruction": s} for s in expanded_instructions], step1_path)
-    print(f"[Step1] 指令扩展完成，共 {len(expanded_instructions)} 条 → {step1_path}")
+    logging.info(f"[Step1] 指令扩展完成，共 {len(expanded_instructions)} 条 → {step1_path}，耗时 {time.time()-start_ts:.1f}s")
     return expanded_instructions
 
 
@@ -289,6 +331,7 @@ def step2_classify_instructions(
     max_tokens: int,
     out_dir: str,
 ) -> List[Tuple[str, bool]]:
+    start_ts = time.time()
     results: List[Tuple[str, bool]] = []
     for instr in tqdm(instructions, desc="Step2 分类识别"):
         flag = is_classification_task(provider.lower(), model, instr, max_tokens=64, temperature=0)
@@ -297,7 +340,9 @@ def step2_classify_instructions(
     save_jsonl([
         {"instruction": instr, "is_classification": is_clf} for instr, is_clf in results
     ], step2_path)
-    print(f"[Step2] 分类识别完成 → {step2_path}")
+    pos = sum(1 for _, f in results if f)
+    neg = len(results) - pos
+    logging.info(f"[Step2] 分类识别完成 → {step2_path} | 分类={pos}, 非分类={neg}，耗时 {time.time()-start_ts:.1f}s")
     return results
 
 
@@ -310,6 +355,7 @@ def step3_generate_instances(
     temperature: float,
     out_dir: str,
 ) -> List[Dict[str, str]]:
+    start_ts = time.time()
     records: List[Dict[str, str]] = []
     for instr, is_clf in tqdm(clf_pairs, desc="Step3 实例生成"):
         for _ in range(max(1, instances_per_instruction)):
@@ -347,7 +393,7 @@ def step3_generate_instances(
 
     step3_path = os.path.join(out_dir, "step3_raw_instances.jsonl")
     save_jsonl(records, step3_path)
-    print(f"[Step3] 实例生成完成，共 {len(records)} 条 → {step3_path}")
+    logging.info(f"[Step3] 实例生成完成，共 {len(records)} 条 → {step3_path}，耗时 {time.time()-start_ts:.1f}s")
     return records
 
 
@@ -366,32 +412,52 @@ def step4_filter_and_dedupe(records: List[Dict[str, str]], out_dir: str) -> List
 
     step4_path = os.path.join(out_dir, "step4_final.jsonl")
     save_jsonl([{k: r[k] for k in ["instruction", "input", "output"] if k in r} for r in deduped], step4_path)
-    print(f"[Step4] 过滤与去重完成：输入 {len(records)} → 过滤后 {len(filtered)} → 去重后 {len(deduped)} 条 → {step4_path}")
+    logging.info(f"[Step4] 过滤与去重完成：输入 {len(records)} → 过滤后 {len(filtered)} → 去重后 {len(deduped)} 条 → {step4_path}")
     return deduped
 
 
 # ===== 固定配置（无需命令行参数）=====
 PROVIDER = "openai"          # 可改为 "dashscope"
 MODEL = "gpt-4o-mini"        # 可改为 "qwen-plus" 等
-NUM_INSTRUCTIONS = 50
+NUM_INSTRUCTIONS = 5          # 测试默认：5 条
 INSTANCES_PER_INSTRUCTION = 1
 SEED_FILE = None              # 可设置为路径："data/seed_tasks.jsonl"
 OUT_DIR = "data/workshop"
 TEMPERATURE = 0.7
-MAX_TOKENS = 512
+MAX_TOKENS = 256              # 测试默认：较小 tokens
 
 
 def run_workshop() -> None:
     _ensure_dir(OUT_DIR)
+    _setup_logging(logging.INFO)
+
+    # 自动选择可用的提供商与模型
+    def resolve_provider_and_model(default_provider: str, default_model: str) -> Tuple[str, str]:
+        openai_key = os.environ.get("OPENAI_API_KEY", "")
+        dashscope_key = os.environ.get("DASHSCOPE_API_KEY", "")
+        provider = default_provider
+        model = default_model
+        if provider == "openai" and not openai_key and dashscope_key:
+            provider = "dashscope"
+            if model == "gpt-4o-mini":
+                model = "qwen-plus"
+        elif provider == "dashscope" and not dashscope_key and openai_key:
+            provider = "openai"
+            if model == "qwen-plus":
+                model = "gpt-4o-mini"
+        return provider, model
+
+    provider_use, model_use = resolve_provider_and_model(PROVIDER, MODEL)
+    logging.info(f"[Prep] 使用提供商: {provider_use}, 模型: {model_use}")
 
     # Step 0: 加载种子任务
     seed_tasks = load_seed_tasks(SEED_FILE)
-    print(f"[Prep] 载入种子任务 {len(seed_tasks)} 条")
+    logging.info(f"[Prep] 载入种子任务 {len(seed_tasks)} 条。示例：{seed_tasks[:3]}")
 
     # Step 1: 指令生成
     instructions = step1_generate_instructions(
-        provider=PROVIDER,
-        model=MODEL,
+        provider=provider_use,
+        model=model_use,
         seed_tasks=seed_tasks,
         num_instructions=NUM_INSTRUCTIONS,
         max_tokens=MAX_TOKENS,
@@ -401,8 +467,8 @@ def run_workshop() -> None:
 
     # Step 2: 分类识别
     clf_pairs = step2_classify_instructions(
-        provider=PROVIDER,
-        model=MODEL,
+        provider=provider_use,
+        model=model_use,
         instructions=instructions,
         max_tokens=MAX_TOKENS,
         out_dir=OUT_DIR,
@@ -410,8 +476,8 @@ def run_workshop() -> None:
 
     # Step 3: 实例生成
     raw_records = step3_generate_instances(
-        provider=PROVIDER,
-        model=MODEL,
+        provider=provider_use,
+        model=model_use,
         clf_pairs=clf_pairs,
         instances_per_instruction=INSTANCES_PER_INSTRUCTION,
         max_tokens=MAX_TOKENS,
