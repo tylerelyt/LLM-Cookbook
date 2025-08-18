@@ -181,7 +181,7 @@ pip install -r chapter6/lesson18/requirements.txt  # Advanced Collaboration
 pip install -r chapter7/lesson1/requirements.txt  # Few-shot Data Construction
 pip install -r chapter7/lesson2/requirements.txt  # Self-Instruct Generation
 pip install -r chapter7/lesson3/requirements.txt  # Alpaca Data Preparation
-pip install -r chapter7/lesson4/requirements.txt  # RLHF Preference Data
+# lesson4 focuses on Alpaca data processing only (no training) – no extra deps
 pip install -r chapter7/lesson5/requirements.txt  # GRPO Group Preference
 
 # Chapter 8: Fine-Tuning Fundamentals

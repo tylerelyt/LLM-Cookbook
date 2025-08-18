@@ -22,11 +22,11 @@ This chapter focuses on constructing high-quality training data for various larg
 - **Features**: Data quality filtering and validation
 - **File**: `alpaca_constructor.py`
 
-### Lesson 4: Alpaca LoRA Fine-tuning
-- **Objective**: Efficient model fine-tuning with LoRA technique
-- **Core**: Parameter-efficient training using Low-Rank Adaptation
-- **Features**: Memory-friendly, fast training, easy deployment
-- **File**: `lora_finetune.py`
+### Lesson 4: Alpaca Data Processing (No Training)
+- **Objective**: Prepare and validate Alpaca-style instruction data
+- **Core**: Standardize `instruction`, `input`, `output` fields; data cleaning and validation
+- **Features**: Quality filtering, schema checks, and basic stats
+- **Note**: This lesson does not include LoRA code or training scripts
 
 ### Lesson 5: RLHF Training Data Construction
 - **Objective**: Construct human feedback preference learning data
