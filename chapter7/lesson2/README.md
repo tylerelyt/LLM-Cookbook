@@ -40,11 +40,11 @@ export DASHSCOPE_API_KEY="your-dashscope-key"# for DashScope
 cd chapter7/lesson2
 
 # One-command workshop (single file, no CLI args)
-python workshop.py
+python self_instruct_workshop.py
 ```
 
 ### Notes
-- `workshop.py` integrates the four-step pipeline end-to-end.
+- `self_instruct_workshop.py` integrates the four-step pipeline end-to-end.
 - Seed tasks are read from `chapter7/lesson2/data/seed_tasks.jsonl`. You can replace it with the official 175 seed tasks for full coverage.
 - Outputs are written to `chapter7/lesson2/data/workshop/` (step-wise JSONL files).
 

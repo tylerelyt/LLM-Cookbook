@@ -14,7 +14,7 @@ This chapter focuses on constructing high-quality training data for various larg
 - **Objective**: Automatically generate instruction-output pairs
 - **Core**: Use LLMs to automatically generate diverse instruction data
 - **Supported APIs**: OpenAI, DashScope (auto-switch)
-- **File**: `workshop.py` (single-file workflow)
+- **File**: `self_instruct_workshop.py` (single-file workflow)
 
 ### Lesson 3: Alpaca Data Processing
 - **Objective**: Convert to Stanford Alpaca standard format and validate data quality
@@ -58,7 +58,7 @@ python construct_fewshot.py --input-file data/sentiment_demo.json --task-type se
 2. **Self-Instruct Data Generation**
 ```bash
 cd lesson2
-python workshop.py
+python self_instruct_workshop.py
 ```
 
 3. **Alpaca Data Processing**

@@ -230,7 +230,7 @@ python construct_fewshot.py --input-file data/sentiment_demo.json --task-type se
 
 # Generate Self-Instruct data expansion (single-file workshop)
 cd chapter7/lesson2
-python workshop.py
+python self_instruct_workshop.py
 
 # Convert to Alpaca format for fine-tuning
 cd chapter7/lesson3
