@@ -111,7 +111,6 @@ A practical workshop for building LLM applications from scratch. Learn by doing 
 - Self-Instruct automated data generation and expansion
 - Alpaca-style supervised fine-tuning data preparation
 - RLHF preference data construction for reward modeling
-- GRPO group relative preference optimization data
 
 **📚 Paper Collection**
 - [Self-Instruct: Aligning Language Models with Self Generated Instructions](https://arxiv.org/abs/2212.10560) - Wang et al., 2022
@@ -180,9 +179,8 @@ pip install -r chapter6/lesson18/requirements.txt  # Advanced Collaboration
 # Chapter 7: Model Fine-Tuning Data Construction
 pip install -r chapter7/lesson1/requirements.txt  # Few-shot Data Construction
 pip install -r chapter7/lesson2/requirements.txt  # Self-Instruct Generation
-pip install -r chapter7/lesson3/requirements.txt  # Alpaca Data Preparation
-# lesson4 focuses on Alpaca data processing only (no training) – no extra deps
-pip install -r chapter7/lesson5/requirements.txt  # GRPO Group Preference
+pip install -r chapter7/lesson3/requirements.txt  # Alpaca Data Processing
+pip install -r chapter7/lesson4/requirements.txt  # RLHF Preference Data
 
 # Chapter 8: Fine-Tuning Fundamentals
 pip install -r chapter8/lesson1/requirements.txt  # GPT-1 Style Fine-tuning
@@ -238,9 +236,9 @@ python workshop.py
 cd chapter7/lesson3
 python alpaca_constructor.py --input-file ../lesson1/data/fewshot_sentiment.jsonl --conversion-type fewshot_to_alpaca --output-path data/alpaca_data.jsonl
 
-# Construct GRPO preference groups for advanced RLHF
-cd chapter7/lesson5
-python grpo_constructor.py --input-file ../lesson3/data/alpaca_data.jsonl --method generate_groups --group-size 4 --output-path data/grpo_groups.jsonl
+# Construct RLHF preference pairs
+cd chapter7/lesson4
+python rlhf_constructor.py --input-file ../lesson3/data/alpaca_data.jsonl --method model_comparison --high-model qwen-plus --low-model qwen-turbo --output-path data/rlhf_pairs.jsonl
 
 # Learn GPT-1 fine-tuning principles with DashScope embeddings
 cd chapter8/lesson1

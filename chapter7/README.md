@@ -16,19 +16,14 @@ This chapter focuses on constructing high-quality training data for various larg
 - **Supported APIs**: OpenAI, DashScope (auto-switch)
 - **File**: `workshop.py` (single-file workflow)
 
-### Lesson 3: Alpaca Training Data Construction
-- **Objective**: Convert to Stanford Alpaca standard format
-- **Core**: Standardized `instruction`, `input`, `output` structure
-- **Features**: Data quality filtering and validation
+### Lesson 3: Alpaca Data Processing
+- **Objective**: Convert to Stanford Alpaca standard format and validate data quality
+- **Core**: Standardized `instruction`, `input`, `output` structure; cleaning and validation
+- **Features**: Data quality filtering, schema checks, and basic statistics
 - **File**: `alpaca_constructor.py`
+- **Note**: Focuses on data processing only; does not include LoRA code or training scripts
 
-### Lesson 4: Alpaca Data Processing (No Training)
-- **Objective**: Prepare and validate Alpaca-style instruction data
-- **Core**: Standardize `instruction`, `input`, `output` fields; data cleaning and validation
-- **Features**: Quality filtering, schema checks, and basic stats
-- **Note**: This lesson does not include LoRA code or training scripts
-
-### Lesson 5: RLHF Training Data Construction
+### Lesson 4: RLHF Training Data Construction
 - **Objective**: Construct human feedback preference learning data
 - **Core**: Model comparison method for generating preference pairs
 - **Format**: `prompt`, `chosen`, `rejected` triplets
@@ -49,7 +44,6 @@ pip install -r lesson1/requirements.txt
 pip install -r lesson2/requirements.txt
 pip install -r lesson3/requirements.txt
 pip install -r lesson4/requirements.txt
-pip install -r lesson5/requirements.txt
 
 ```
 
@@ -67,21 +61,15 @@ cd lesson2
 python workshop.py
 ```
 
-3. **Alpaca Format Conversion**
+3. **Alpaca Data Processing**
 ```bash
 cd lesson3
 python alpaca_constructor.py --input-file ../lesson1/data/fewshot_output.jsonl --output-path data/alpaca_output.jsonl
 ```
 
-4. **Alpaca LoRA Fine-tuning**
+4. **RLHF Preference Pair Construction**
 ```bash
 cd lesson4
-python lora_finetune.py train --model-name-or-path microsoft/DialoGPT-medium --data-path ../lesson3/data/alpaca_output.jsonl --output-dir ./output/alpaca-lora --num-train-epochs 3
-```
-
-5. **RLHF Preference Pair Construction**
-```bash
-cd lesson5
 python rlhf_constructor.py --input-file ../lesson3/data/alpaca_output.jsonl --method model_comparison --high-model qwen-plus --low-model qwen-turbo --output-path data/rlhf_output.jsonl
 ```
 
