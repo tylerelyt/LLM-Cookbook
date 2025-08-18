@@ -230,9 +230,9 @@ python image_analyzer.py
 cd chapter7/lesson1
 python construct_fewshot.py --input-file data/sentiment_demo.json --task-type sentiment --output-path data/fewshot_sentiment.jsonl
 
-# Generate Self-Instruct data expansion
+# Generate Self-Instruct data expansion (single-file workshop)
 cd chapter7/lesson2
-python self_instruct.py --provider dashscope --model qwen-plus --num-instructions 100 --output-path data/self_instruct.jsonl
+python workshop.py
 
 # Convert to Alpaca format for fine-tuning
 cd chapter7/lesson3
