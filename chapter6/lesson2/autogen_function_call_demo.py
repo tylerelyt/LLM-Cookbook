@@ -37,15 +37,17 @@ def get_llm_config():
 def generate_numbers(
     count: Annotated[int, "生成数字的数量"] = 10,
     min_val: Annotated[int, "最小值"] = 1,
-    max_val: Annotated[int, "最大值"] = 100
+    max_val: Annotated[int, "最大值"] = 100,
+    seed: Annotated[int, "随机种子，用于保证结果可重复性"] = None
 ) -> Annotated[dict, "包含生成的数字列表和描述信息"]:
     """
-    生成随机数列表 - 与 lesson1 相同的函数，但添加了 AutoGen 类型注解
+    生成随机数列表 - 通用的随机数生成函数
     AutoGen 通过类型注解自动处理参数验证和文档生成
     """
     print(f"🎲 [AutoGen] 生成 {count} 个范围在 [{min_val}, {max_val}] 的随机数...")
     
-    random.seed(42)  # 确保结果可重复，便于对比
+    if seed is not None:
+        random.seed(seed)
     numbers = [random.randint(min_val, max_val) for _ in range(count)]
     
     result = {
@@ -105,14 +107,22 @@ def create_assistant_agent():
         llm_config=llm_config,
     )
 
-def create_user_proxy():
-    """创建用户代理 - 处理函数执行"""
+def create_user_proxy(termination_keywords=None):
+    """
+    创建用户代理 - 处理函数执行
+    
+    Args:
+        termination_keywords: 用于判断对话结束的关键词列表，默认使用通用关键词
+    """
+    if termination_keywords is None:
+        termination_keywords = ["完成", "结束", "任务完成", "分析完成"]
+    
     return UserProxyAgent(
         name="用户代理",
         human_input_mode="NEVER",
         max_consecutive_auto_reply=8,
         is_termination_msg=lambda msg: any(word in msg.get("content", "").lower() 
-                                         for word in ["合格", "不合格", "完成"]),
+                                         for word in termination_keywords),
         code_execution_config={"use_docker": False},
     )
 
@@ -156,8 +166,8 @@ def main():
     
     print("✅ AutoGen 函数注册完成")
     
-    # 相同的测试任务（与 lesson1 完全一致）
-    task = """请帮我生成一组测试数据并评估它是否适合作为学生考试成绩的样本。要求数据量15-20个，分数范围0-100。如果平均分在60-80之间且最低分不低于30，就算合格的样本。请告诉我最终结论：合格还是不合格？"""
+    # 相同的测试任务（与 lesson1 完全一致），为了结果可重复性，指定随机种子
+    task = """请帮我生成一组测试数据并评估它是否适合作为学生考试成绩的样本。要求数据量15-20个，分数范围0-100，使用随机种子42以确保结果可重复。如果平均分在60-80之间且最低分不低于30，就算合格的样本。请告诉我最终结论：合格还是不合格？"""
     
     print(f"\n🎯 测试任务: {task}")
     print("="*60)

@@ -33,9 +33,10 @@ def call_llm(messages, model="qwen-max"):
         return f"LLM调用失败: {str(e)}"
 
 # ==================== 工具函数 ====================
-def generate_numbers(count=10, min_val=1, max_val=100):
+def generate_numbers(count=10, min_val=1, max_val=100, seed=None):
     """生成随机数列表"""
-    random.seed(42)  # 确保结果可重复
+    if seed is not None:
+        random.seed(seed)
     numbers = [random.randint(min_val, max_val) for _ in range(count)]
     return {
         "description": f"生成 {count} 个随机数",
@@ -71,7 +72,7 @@ FUNCTIONS = {
     "generate_numbers": {
         "func": generate_numbers,
         "desc": "生成指定数量和范围的随机数列表",
-        "params": {"count": "数量", "min_val": "最小值", "max_val": "最大值"}
+        "params": {"count": "数量", "min_val": "最小值", "max_val": "最大值", "seed": "随机种子（可选）"}
     },
     "calculate_stats": {
         "func": calculate_stats,
@@ -150,19 +151,26 @@ So the final answer is: 北京今天的天气是多云，温度15°C，湿度60%
             return None
 
     def process_parameters(self, params):
-        """处理参数中的数据引用"""
+        """处理参数中的数据引用 - 通用的结果引用处理"""
         for key, value in params.items():
-            if key == "numbers" and "generate_numbers" in self.results:
-                if isinstance(value, str) and ("generated" in value.lower() or len(str(value)) < 50):
-                    params[key] = self.results["generate_numbers"]["numbers"]
-            elif key == "data" and self.results:
-                # 合并之前的结果
-                combined = {}
-                for result in self.results.values():
+            # 通用的数据引用处理
+            if isinstance(value, str) and len(value) < 50:
+                # 检查是否有匹配的结果数据
+                for func_name, result in self.results.items():
                     if isinstance(result, dict) and "error" not in result:
-                        combined.update(result)
-                if combined:
-                    params[key] = combined
+                        # 如果参数名与结果中的某个键匹配，使用该数据
+                        if key in result:
+                            params[key] = result[key]
+                            break
+                        # 如果参数值提到了某个函数名，尝试使用该函数的结果
+                        elif func_name in value.lower():
+                            # 优先使用与参数名匹配的键
+                            if key in result:
+                                params[key] = result[key]
+                            # 否则使用整个结果
+                            elif isinstance(result, (list, dict)):
+                                params[key] = result
+                            break
 
     def run(self, request):
         """执行完整流程"""
@@ -232,8 +240,8 @@ def main():
     
     engine = SelfAskEngine()
     
-    # 测试任务
-    task = """请帮我生成一组测试数据并评估它是否适合作为学生考试成绩的样本。要求数据量15-20个，分数范围0-100。如果平均分在60-80之间且最低分不低于30，就算合格的样本。请告诉我最终结论：合格还是不合格？"""
+    # 测试任务 - 为了结果可重复性，指定随机种子
+    task = """请帮我生成一组测试数据并评估它是否适合作为学生考试成绩的样本。要求数据量15-20个，分数范围0-100，使用随机种子42确保结果可重复。如果平均分在60-80之间且最低分不低于30，就算合格的样本。请告诉我最终结论：合格还是不合格？"""
     
     results = engine.run(task)
     
