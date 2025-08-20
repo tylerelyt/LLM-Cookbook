@@ -94,12 +94,17 @@ A practical workshop for building LLM applications from scratch. Learn by doing 
 
 ### 🤖 Chapter 6: Expert Multi-Agent Orchestration
 **Advanced distributed AI coordination and collaboration patterns**
+- Manual function call implementations with Self-Ask pattern
+- AutoGen-based function call implementations with ReAct pattern
+- Code interpreter capabilities for dynamic problem solving
+- Reflexion-based reflection systems with semantic memory
 - Advanced inter-agent communication protocols and message passing
 - Complex task decomposition and hierarchical planning strategies
 - Advanced consensus mechanisms and conflict resolution algorithms
 - Distributed reasoning and collaborative problem solving
 
 **📚 Paper Collection**
+- [Self-Consistency Improves Chain of Thought Reasoning in Language Models](https://arxiv.org/abs/2203.11171) - Wang et al., 2022 (Self-Ask)
 - [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) - Yao et al., 2022
 - [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) - Shinn et al., 2023
 - [Communicative Agents for Software Development](https://arxiv.org/abs/2307.07924) - Qian et al., 2023
@@ -173,8 +178,10 @@ pip install -r chapter5/lesson1/requirements.txt  # Image Content Analysis
 pip install -r chapter5/lesson2/requirements.txt  # Document Processing
 
 # Chapter 6: Expert Multi-Agent Orchestration
-pip install -r chapter6/lesson17/requirements.txt  # Agent Coordination
-pip install -r chapter6/lesson18/requirements.txt  # Advanced Collaboration
+pip install -r chapter6/lesson1/requirements.txt  # Manual Function Call with Self-Ask
+pip install -r chapter6/lesson2/requirements.txt  # AutoGen Function Call Demo
+pip install -r chapter6/lesson3/requirements.txt  # Code Interpreter Workshop
+pip install -r chapter6/lesson4/requirements.txt  # Reflection System Demo
 
 # Chapter 7: Model Fine-Tuning Data Construction
 pip install -r chapter7/lesson1/requirements.txt  # Few-shot Data Construction
@@ -217,9 +224,21 @@ python nl2sql_engine.py
 cd chapter4/lesson1
 python example.py
 
-# Create multi-agent collaboration systems
-cd chapter6/lesson17  
-python agent_manager.py
+# Build manual function call systems with Self-Ask pattern
+cd chapter6/lesson1
+python function_call_workshop.py
+
+# Create AutoGen-based function call systems
+cd chapter6/lesson2
+python autogen_function_call_demo.py
+
+# Develop code interpreter capabilities
+cd chapter6/lesson3
+python code_interpreter_workshop.py
+
+# Build reflection systems with semantic memory
+cd chapter6/lesson4
+python reflection_system_demo.py
 
 # Analyze images and documents
 cd chapter5/lesson1
