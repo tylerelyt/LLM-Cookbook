@@ -118,30 +118,31 @@ export OPENAI_API_KEY="your-openai-key"
 
 ### Step-by-Step Learning Path
 ```bash
-# 1. Start with cache optimization
+# 1. Start with cache optimization and prompt engineering
 cd lesson1
-pip install -r requirements.txt
-python cache_optimizer.py --demo
+python example.py
 
 # 2. Learn tool masking strategies
 cd ../lesson2  
 pip install -r requirements.txt
-python tool_masker.py --demo
+python tool_masking_demo.py --demo all
 
 # 3. Explore filesystem memory
 cd ../lesson3
 pip install -r requirements.txt
-python filesystem_memory.py --demo
+python filesystem_memory_demo.py
 
 # 4. Practice attention management
 cd ../lesson4
 pip install -r requirements.txt
-python attention_manager.py --demo
+python attention_recitation_demo.py
 
 # 5. Master error learning mechanisms
 cd ../lesson5
 pip install -r requirements.txt
-python error_tracker.py --demo
+python error_tracker.py --create-demo
+python recovery_engine.py --test-scenarios
+python failure_learner.py --analyze
 ```
 
 ### Integrated Practice Project
